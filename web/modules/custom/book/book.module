@@ -1,10 +1,18 @@
 <?php
 
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
 
-function book_preprocess_node__book($variables) {
+function book_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+    switch ($entity->bundle()) {
+        case 'book':
+            $bookHelper = \Drupal::service('book.BookHelper');
+            $title = $bookHelper->getTitle($entity);
+            $build['title'][0]['#context']['value'] = $title;
+            break;
+    }
 }
 
 /**
@@ -17,9 +25,14 @@ function book_preprocess_node__book($variables) {
 function book_node_access(EntityInterface $entity, $operation, AccountInterface $account) {
     switch ($entity->bundle()) {
         case 'book':
+            $roles = $account->getRoles();
             switch ($operation) {
                 case 'view':
-                    //return AccessResult::forbidden();
+                    $bookHelper = \Drupal::service('book.BookHelper');
+                    $isYearOld = $bookHelper->is1yearOld($entity);
+                    if ($isYearOld && in_array('full_editor', $roles)) {
+                        return AccessResult::forbidden();
+                    }
                     break;
             }
             break;
