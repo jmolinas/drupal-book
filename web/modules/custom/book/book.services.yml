@@ -1,0 +1,3 @@
+services:
+  book.BookHelper:
+    class: Drupal\book\services\BookHelper

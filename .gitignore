@@ -1,0 +1,7 @@
+web/sites/default/files
+web/core
+web/modules/contrib
+.idea
+vendor
+*.log
+*.sql

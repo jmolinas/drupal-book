@@ -1,0 +1,29 @@
+uuid: 0e7a79a6-2890-4ea3-b729-274b90645d50
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_keywords
+    - node.type.book
+    - taxonomy.vocabulary.keywords
+id: node.book.field_keywords
+field_name: field_keywords
+entity_type: node
+bundle: book
+label: Keywords
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      keywords: keywords
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,28 @@
+<?php
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Session\AccountInterface;
+
+function book_preprocess_node__book($variables) {
+}
+
+/**
+ * Implements HOOK_node_access()
+ *
+ * @param EntityInterface $entity
+ * @param AccountInterface $account
+ * @return void
+ */
+function book_node_access(EntityInterface $entity, $operation, AccountInterface $account) {
+    switch ($entity->bundle()) {
+        case 'book':
+            switch ($operation) {
+                case 'view':
+                    //return AccessResult::forbidden();
+                    break;
+            }
+            break;
+    }
+    return AccessResult::neutral();
+}

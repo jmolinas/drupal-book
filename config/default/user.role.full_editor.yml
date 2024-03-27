@@ -1,0 +1,9 @@
+uuid: 34be01b9-9598-49c1-9c84-ed7d4dfe6b95
+langcode: en
+status: true
+dependencies: {  }
+id: full_editor
+label: 'Full Editor'
+weight: 5
+is_admin: null
+permissions: {  }
