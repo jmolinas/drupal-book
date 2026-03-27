@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming for the Book Theme.
+ */
+
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_preprocess_node() for book nodes.
+ *
+ * Passes extra variables to the book node template so Twig
+ * can render them without logic in the template itself.
+ */
+function booktheme_preprocess_node(array &$variables): void {
+  /** @var \Drupal\node\NodeInterface $node */
+  $node = $variables['node'];
+
+  if (!$node instanceof NodeInterface || $node->bundle() !== 'book') {
+    return;
+  }
+
+  /** @var \Drupal\book\services\BookHelper $bookHelper */
+  $bookHelper = \Drupal::service('book.BookHelper');
+
+  // Formatted publication date via the service (keeps date logic centralised).
+  $variables['publication_date'] = $bookHelper->getFormattedPublicationDate($node);
+
+  // Author as a plain string.
+  $author_field = $node->get('field_author');
+  if (!$author_field->isEmpty()) {
+    $variables['book_author'] = $author_field->value;
+  }
+
+  // Flag for the "Classic" badge — books published more than one year ago.
+  $variables['is_classic'] = $bookHelper->is1yearOld($node);
+}

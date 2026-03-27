@@ -1,0 +1,13 @@
+name: Book Theme
+type: theme
+description: A custom theme for the Book module, providing styled templates for book content.
+core_version_requirement: ^10
+base theme: olivero
+libraries:
+  - booktheme/global
+regions:
+  header: Header
+  primary_menu: Primary menu
+  content: Content
+  sidebar: Sidebar
+  footer: Footer

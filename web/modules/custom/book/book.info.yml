@@ -1,7 +1,7 @@
 name: Book module
 type: module
 description: Awesome Book module.
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10
 package: Development
 
 # Information added by Drupal.org packaging script on 2023-03-20

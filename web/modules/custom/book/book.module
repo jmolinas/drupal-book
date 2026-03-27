@@ -1,41 +1,41 @@
 <?php
 
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\node\NodeInterface;
 
-function book_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
-    switch ($entity->bundle()) {
-        case 'book':
-            $bookHelper = \Drupal::service('book.BookHelper');
-            $title = $bookHelper->getTitle($entity);
-            $build['title'][0]['#context']['value'] = $title;
-            break;
-    }
+/**
+ * Implements hook_node_view().
+ */
+function book_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, string $view_mode): void {
+  if ($entity->bundle() !== 'book') {
+    return;
+  }
+
+  /** @var \Drupal\book\services\BookHelper $bookHelper */
+  $bookHelper = \Drupal::service('book.BookHelper');
+  $build['title'][0]['#context']['value'] = $bookHelper->getTitle($entity);
 }
 
 /**
- * Implements HOOK_node_access()
+ * Implements hook_node_access().
  *
- * @param EntityInterface $entity
- * @param AccountInterface $account
- * @return void
+ * Prevents full_editor roles from viewing books older than one year.
  */
-function book_node_access(EntityInterface $entity, $operation, AccountInterface $account) {
-    switch ($entity->bundle()) {
-        case 'book':
-            $roles = $account->getRoles();
-            switch ($operation) {
-                case 'view':
-                    $bookHelper = \Drupal::service('book.BookHelper');
-                    $isYearOld = $bookHelper->is1yearOld($entity);
-                    if ($isYearOld && in_array('full_editor', $roles)) {
-                        return AccessResult::forbidden();
-                    }
-                    break;
-            }
-            break;
-    }
+function book_node_access(NodeInterface $entity, string $operation, AccountInterface $account): AccessResultInterface {
+  if ($entity->bundle() !== 'book' || $operation !== 'view') {
     return AccessResult::neutral();
+  }
+
+  /** @var \Drupal\book\services\BookHelper $bookHelper */
+  $bookHelper = \Drupal::service('book.BookHelper');
+
+  if ($bookHelper->is1yearOld($entity) && in_array('full_editor', $account->getRoles(), TRUE)) {
+    return AccessResult::forbidden()->addCacheableDependency($entity);
+  }
+
+  return AccessResult::neutral();
 }

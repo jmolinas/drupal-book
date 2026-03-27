@@ -1,0 +1,62 @@
+{#
+/**
+ * @file
+ * Theme override for a Book node.
+ *
+ * Available variables:
+ * - node: The node entity.
+ * - label: The title of the node (may include "!!!" suffix from BookHelper).
+ * - content: All rendered node fields.
+ * - publication_date: Formatted date string (set in booktheme_preprocess_node).
+ * - book_author: Plain-text author name (set in booktheme_preprocess_node).
+ * - is_classic: Boolean — TRUE if the book is more than 1 year old.
+ *
+ * @see booktheme_preprocess_node()
+ */
+#}
+<article{{ attributes.addClass('book-node') }}>
+
+  <header class="book-node__header">
+    {{ title_prefix }}
+    {% if not page %}
+      <h2{{ title_attributes.addClass('book-node__title') }}>
+        <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+      </h2>
+    {% else %}
+      <h1{{ title_attributes.addClass('book-node__title') }}>{{ label }}</h1>
+    {% endif %}
+    {{ title_suffix }}
+
+    <div class="book-node__meta">
+      {% if book_author %}
+        <span class="book-node__author">{{ 'By @author'|t({'@author': book_author}) }}</span>
+      {% endif %}
+
+      {% if publication_date %}
+        <span class="book-node__date">{{ 'Published: @date'|t({'@date': publication_date}) }}</span>
+      {% endif %}
+
+      {% if is_classic %}
+        <span class="book-node__badge book-node__badge--classic">{{ 'Classic'|t }}</span>
+      {% endif %}
+    </div>
+  </header>
+
+  {% if content.field_cover_image %}
+    <div class="book-node__cover">
+      {{ content.field_cover_image }}
+    </div>
+  {% endif %}
+
+  <div class="book-node__body">
+    {{ content.body }}
+  </div>
+
+  {% if content.field_keywords %}
+    <div class="book-node__keywords">
+      <span class="book-node__keywords-label">{{ 'Keywords'|t }}:</span>
+      {{ content.field_keywords }}
+    </div>
+  {% endif %}
+
+</article>

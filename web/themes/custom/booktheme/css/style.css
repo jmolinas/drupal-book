@@ -1,0 +1,91 @@
+/* Book Theme — global styles */
+
+/* ── Node layout ─────────────────────────────────────────── */
+.book-node {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+.book-node__header {
+  border-bottom: 2px solid #2c2c2c;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+.book-node__title {
+  font-size: 2rem;
+  margin: 0 0 0.5rem;
+  color: #1a1a1a;
+}
+
+.book-node__title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.book-node__title a:hover {
+  text-decoration: underline;
+}
+
+/* ── Meta line (author · date · badge) ───────────────────── */
+.book-node__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  font-size: 0.875rem;
+  color: #555;
+  font-family: system-ui, sans-serif;
+}
+
+.book-node__badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.book-node__badge--classic {
+  background-color: #b8860b;
+  color: #fff;
+}
+
+/* ── Cover image ─────────────────────────────────────────── */
+.book-node__cover {
+  margin-bottom: 1.5rem;
+}
+
+.book-node__cover img {
+  max-width: 200px;
+  height: auto;
+  display: block;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ── Body text ───────────────────────────────────────────── */
+.book-node__body {
+  line-height: 1.75;
+  font-size: 1.05rem;
+  color: #222;
+}
+
+/* ── Keywords ────────────────────────────────────────────── */
+.book-node__keywords {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ddd;
+  font-family: system-ui, sans-serif;
+  font-size: 0.875rem;
+  color: #555;
+}
+
+.book-node__keywords-label {
+  font-weight: 600;
+  margin-right: 0.4rem;
+}

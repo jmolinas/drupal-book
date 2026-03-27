@@ -1,3 +1,5 @@
 services:
   book.BookHelper:
     class: Drupal\book\services\BookHelper
+    arguments:
+      - '@date.formatter'
